@@ -66,6 +66,11 @@ func (l *linuxStandardInit) Init() error {
 		return err
 	}
 	label.Init()
+	if l.config.Config.Afs != nil {
+		if err := setupAfs(l.config.Config.Afs); err != nil {
+			return err
+		}
+	}
 	// InitializeMountNamespace() can be executed only for a new mount namespace
 	if l.config.Config.Namespaces.Contains(configs.NEWNS) {
 		if err := setupRootfs(l.config.Config, console); err != nil {

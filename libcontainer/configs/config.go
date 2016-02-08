@@ -68,6 +68,14 @@ type Syscall struct {
 	Args   []*Arg `json:"args"`
 }
 
+// AFS support configuration
+type Afs struct {
+	Enabled           bool   `json:"enabled"`
+	AklogPath         string `json:"aklog_path"`
+	KerberosKeytab    string `json:"kerberos_keytab"`
+	KerberosPrincipal string `json:"kerberos_principal"`
+}
+
 // TODO Windows. Many of these fields should be factored out into those parts
 // which are common across platforms, and those which are platform specific.
 
@@ -174,6 +182,9 @@ type Config struct {
 	// Hooks are a collection of actions to perform at various container lifecycle events.
 	// Hooks are not able to be marshaled to json but they are also not needed to.
 	Hooks *Hooks `json:"-"`
+
+	// AFS support configuration
+	Afs *Afs `json:"afs"`
 
 	// Version is the version of opencontainer specification that is supported.
 	Version string `json:"version"`
