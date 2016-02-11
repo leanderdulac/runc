@@ -17,14 +17,17 @@ func setupAfs(config *configs.Afs) error {
 		return err
 	}
 
-	// Make sure we're not holding any tickets
-	if err := goafs.Unlog(); err != nil {
+	env := []string{"KRB5CCNAME=KEYRING:session:container-afs"}
+
+	cmd := exec.Command("kinit", "-k", "-t", config.KerberosKeytab, config.KerberosPrincipal)
+	cmd.Env = env
+
+	if err := cmd.Run(); err != nil {
 		return err
 	}
 
-	cmd := exec.Command(config.AklogPath, "-d", "-force", "-noprdb", "-keytab", config.KerberosKeytab, "-principal", config.KerberosPrincipal)
-
-	cmd.Env = []string{}
+	cmd = exec.Command("aklog", "-force")
+	cmd.Env = env
 
 	return cmd.Run()
 }

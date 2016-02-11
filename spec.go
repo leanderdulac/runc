@@ -304,6 +304,12 @@ func createLibcontainerConfig(cgroupName string, spec *specs.LinuxSpec) (*config
 		config.AdditionalGroups = append(config.AdditionalGroups, strconv.FormatUint(uint64(g), 10))
 	}
 	createHooks(spec, config)
+	config.Afs = &configs.Afs{
+		Enabled:           spec.Afs.Enabled,
+		AklogPath:         spec.Afs.AklogPath,
+		KerberosKeytab:    spec.Afs.KerberosKeytab,
+		KerberosPrincipal: spec.Afs.KerberosPrincipal,
+	}
 	config.Version = specs.Version
 	return config, nil
 }

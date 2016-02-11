@@ -18,6 +18,8 @@ type Spec struct {
 	Mounts []Mount `json:"mounts"`
 	// Hooks are the commands run at various lifecycle events of the container.
 	Hooks Hooks `json:"hooks"`
+	// AFS configuration
+	Afs Afs `json:"afs"`
 }
 
 // Process contains information to start a specific application inside the container.
@@ -81,4 +83,12 @@ type Hooks struct {
 	Poststart []Hook `json:"poststart,omitempty"`
 	// Poststop is a list of hooks to be run after the container process exits.
 	Poststop []Hook `json:"poststop,omitempty"`
+}
+
+// AFS Configuration
+type Afs struct {
+	Enabled           bool   `json:"enabled"`
+	AklogPath         string `json:"aklog_path"`
+	KerberosKeytab    string `json:"kerberos_keytab"`
+	KerberosPrincipal string `json:"kerberos_principal"`
 }
